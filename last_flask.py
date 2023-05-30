@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, url_for
 #from flask_socketio import SocketIO
 from Bio.Blast import NCBIWWW, NCBIXML
 from Bio import SeqIO
@@ -31,16 +31,21 @@ def blast():
     total_words = len(words1.union(words2))
     shared_words = len(words1.intersection(words2))
     percentage_identity = (shared_words / len(words2)) * 100
+    identity=str(percentage_identity)
     # Print the percentage identity
-    print("Percentage identity: {:.2f}%".format(percentage_identity))
+    return identity
+    #print("Percentage identity: {:.2f}%".format(percentage_identity))
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)#,port=9000)
 import requests
 
 url = 'http://127.0.0.1:5000/blast'
-#'https://blast-app-f7li.onrender.com'
-#'http://localhost:5000/blast'
+# #'http://127.0.0.1:5000/blast'
+# #'https://blast-app-f7li.onrender.com'
+# #'http://localhost:5000/blast'
 
 data = {'query': 'file2', 'subject': 'file1'}
 response = requests.post(url, data=data)
